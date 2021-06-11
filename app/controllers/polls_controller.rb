@@ -4,6 +4,7 @@ class PollsController < ApplicationController
   # GET /polls or /polls.json
   def index
     @polls = Poll.all
+    @poll = Poll.new
   end
 
   # GET /polls/1 or /polls/1.json
