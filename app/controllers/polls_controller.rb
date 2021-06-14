@@ -3,7 +3,7 @@ class PollsController < ApplicationController
 
   # GET /polls or /polls.json
   def index
-    @polls = Poll.all
+    @polls = Poll.all.limit(10)
     @poll = Poll.new
   end
 
@@ -24,47 +24,37 @@ class PollsController < ApplicationController
   def create
     @poll = Poll.new(poll_params)
 
-    respond_to do |format|
-      if @poll.save
-        format.html { redirect_to @poll, notice: "Poll was successfully created." }
-        format.json { render :show, status: :created, location: @poll }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @poll.errors, status: :unprocessable_entity }
-      end
+    if @poll.save
+      redirect_to polls_path, notice: 'Poll was updated.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /polls/1 or /polls/1.json
   def update
-    respond_to do |format|
-      if @poll.update(poll_params)
-        format.html { redirect_to @poll, notice: "Poll was successfully updated." }
-        format.json { render :show, status: :ok, location: @poll }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @poll.errors, status: :unprocessable_entity }
-      end
+    if @poll.update(poll_params)
+      redirect_to @poll, notice: "Poll was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /polls/1 or /polls/1.json
   def destroy
     @poll.destroy
-    respond_to do |format|
-      format.html { redirect_to polls_url, notice: "Poll was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to polls_path, notice: 'Poll was deleted.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_poll
-      @poll = Poll.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def poll_params
-      params.require(:poll).permit(:name, :alcohol)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_poll
+    @poll = Poll.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def poll_params
+    params.require(:poll).permit(:name, :alcohol)
+  end
 end

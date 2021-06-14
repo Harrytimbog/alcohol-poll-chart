@@ -11,4 +11,5 @@
 </p>
 
 <%= link_to 'Edit', edit_poll_path(@poll) %> |
+<%= link_to 'Destroy', @poll, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Back', polls_path %>

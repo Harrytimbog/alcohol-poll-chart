@@ -7,7 +7,6 @@ require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
-require("coffee")
 require("chartkick")
 require("chart.js")
 
@@ -27,7 +26,7 @@ require("chart.js")
 // External imports
 import "bootstrap";
 import "chartkick/chart.js"
-import pollUpdate from "../coffee/polls.js";
+import { pollUpdate } from "../includes/polls";
 
 // Internal imports, e.g:
 // import { initSelect2 } from '../components/init_select2';
